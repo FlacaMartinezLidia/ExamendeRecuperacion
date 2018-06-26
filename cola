@@ -1,0 +1,74 @@
+package recuperaci;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.io.FileNotFoundException;
+
+
+public class Cola {
+	
+	private Nodo raiz, cima;
+    
+    public Cola() {
+        raiz = null;
+        cima = null;
+    }
+    
+    public boolean colaVacia (){
+        if (raiz == null)
+            return true;
+        else
+            return false;
+    }
+
+    public void insertar (Ventas dato) throws IOException
+    {
+    	RandomAccessFile raf = new RandomAccessFile("datos.dat","rw");
+    	raf.seek(raf.length());
+        Nodo nuevo = new Nodo(dato);        
+        nuevo.siguiente = null;
+        if (colaVacia ()) {
+            raiz = nuevo;
+            cima = nuevo;
+        } else {
+            cima.siguiente = nuevo;
+            cima = nuevo;
+            }
+        raf.writeUTF(nuevo.elemento.getNit());
+        raf.writeUTF(nuevo.elemento.getNombre());
+        raf.writeChar(nuevo.elemento.getStatus());
+        raf.close();
+    }
+
+    public Ventas quitar(){
+        if (colaVacia()) {
+        	System.out.println("La cola esta vacia");
+        	return null;
+        } 
+        Ventas aux = raiz.elemento;
+        if (raiz == cima){
+            raiz = null;
+            cima = null;
+        } else {
+            raiz = raiz.siguiente;
+        }
+        System.out.println("Dato eliminado: " + aux);
+        return aux;
+    }
+
+    public void listar() {
+        Nodo t = raiz;
+        while (t != null) {
+            System.out.println("Dato: " + t.elemento.getNit());
+            System.out.println("Dato: " + t.elemento.getNombre());
+            System.out.println("Dato: " + t.elemento.getClass());
+            t = t.siguiente;
+        }
+    }
+    
+    public void vaciar() {
+		while (!colaVacia()) {
+			raiz = raiz.siguiente;
+		}
+    }
+}
