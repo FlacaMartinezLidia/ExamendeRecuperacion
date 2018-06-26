@@ -1,0 +1,14 @@
+package recuperaci;
+
+
+public class Nodo {
+
+	
+	Ventas elemento;
+	Nodo siguiente;
+	
+	Nodo (Ventas x) {
+	elemento = x;
+	siguiente = null;
+	}
+}
