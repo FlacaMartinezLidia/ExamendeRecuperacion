@@ -1,0 +1,36 @@
+package recuperaci;
+
+public class Ventas {
+	
+	private String nombre;
+	private String nit;
+	private String combustible;
+	private char Status;
+	
+	public char getStatus() {
+		return Status;
+	}
+	public void setStatus(char status) {
+		Status = status;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getNit() {
+		return nit;
+	}
+	public void setNit(String nit) {
+		this.nit = nit;
+	}
+	public String getCombustible() {
+		return combustible;
+	}
+	public void setCombustible(String combustible) {
+		this.combustible = combustible;
+	}
+	
+	
+	
