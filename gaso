@@ -1,0 +1,179 @@
+package recuperaci;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Scanner;
+
+
+public class Gasolinera {
+
+	public static void main(String[] args) {
+		Ventas vent = new Ventas ();
+		Cola cola = new Cola ();
+		Gasolinera gaso= new Gasolinera ();
+		Scanner sc= new Scanner(System.in);
+
+		try{
+			
+			RandomAccessFile raf = new RandomAccessFile("datos.dat","rw");
+			RandomAccessFile raf2 = new RandomAccessFile("NoAtendidos.dat","rw");
+			
+			long actual,fin;
+			
+				actual= raf.getFilePointer();
+				fin   = raf.length();
+				
+				while(actual!=fin) {
+					
+					System.out.println(raf.readUTF());
+					System.out.println(raf.readUTF());
+					System.out.println(raf.readChar());
+					gaso.setNit(raf.readUTF());
+					gaso.setNombre(raf.readUTF());
+					
+					System.out.println("El cliente fue Registrado ingrese la letra a ");
+					char c= sc.next().charAt(0);
+					gaso.setStatus(c);
+					System.out.println("-------------");
+					
+					if(c=='a') {
+						raf2.seek(raf2.length());
+						raf2.writeUTF(gaso.getNit());
+						raf2.writeUTF(gaso.getNombre());
+						raf2.writeChar(c);
+						
+						cola.insertar(gaso);
+					}else {
+						System.out.println("atender al cliente lo mas antes posible");
+					}
+					actual= raf.getFilePointer();
+				}
+				System.out.println("");
+				raf.close();
+				raf2.close();
+			}catch(Exception e) {
+				System.out.println("no se pudo abrir el archivo de datos ");
+			}
+			try {
+				gaso.cuerpo();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+
+
+		private String getNombre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+		private String getNit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+		private void setStatus(char c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+		private void setNombre(String readUTF) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+		private void setNit(String readUTF) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+		public void  cuerpo() throws IOException {
+			Scanner sc = new Scanner(System.in);
+			int opcion = 0;
+			while (opcion < 1 || opcion > 2) {
+				System.out.println("Gasolinera  ");
+				System.out.println("bienvenido ");
+				System.out.println("1.Iniciar");
+				opcion = sc.nextInt();
+			}
+			int salir = 0;
+			Ventas ms = new Ventas();
+			
+			Cola cola = null;
+			do {
+				System.out.println("1 Insertar");
+				System.out.println("2 Eliminar");
+				System.out.println("3 Listar");
+				System.out.println("4 Vaciar");
+				System.out.println("0 salir");
+				System.out.println("Elija Opcion");
+				salir = sc.nextInt();
+				
+				if (cola == null && opcion == 2) {
+					cola = new Cola();
+				}
+				switch (salir) {
+				case 0:
+					System.out.println("");
+					break;
+				case 1:
+					int op=0;
+					while(op!=1) {
+					System.out.println("Ingrese Nombre: ");
+					System.out.println("Ingrese Nit");
+					ms.setNit(sc.next());
+					sc.nextLine();
+					System.out.println("Ingrese nombre de combustible");
+					ms.setNombre(sc.nextLine());
+					char st = 's';
+					ms.setStatus(st);
+					if (opcion == 2) {
+						
+					
+						cola.insertar(gaso);
+						System.out.println("Salir");
+						op=sc.nextInt();
+					}
+					}
+					break;
+				case 2:
+					
+						cola.quitar();
+					
+					break;
+				case 3:
+					
+						cola.listar();
+					
+					break;
+				case 4:
+					
+						cola.vaciar();
+					
+					break;
+				default:
+					System.out.println("Opcion no valida");
+					break;
+				}
+			} while (salir != 0);
+	}
+
+
+
+		
+
+	}
+
